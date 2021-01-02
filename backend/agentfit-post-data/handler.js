@@ -1,14 +1,14 @@
 const AWS = require("aws-sdk");
 const DynamoDB = new AWS.DynamoDB.DocumentClient();
-const uuid = require('uuid');
 
-
-exports.handler = (event, context, callback) => {
+module.exports.submit = (event, context, callback) => {
     // TODO implement
+const JSONobject = JSON.parse(event.body);
+
 const params = {
     TableName: "agenfit",
     Item: {
-        "WodId" : uuid.v1(),
+        "WodId" : context.awsRequestId,
         "Date": event.Date,
         "Type": event.Type,
         "Timecap": event.Timecap,
