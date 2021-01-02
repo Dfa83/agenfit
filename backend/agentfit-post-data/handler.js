@@ -9,11 +9,11 @@ const params = {
     TableName: "agenfit",
     Item: {
         "WodId" : context.awsRequestId,
-        "Date": event.Date,
-        "Type": event.Type,
-        "Timecap": event.Timecap,
-        "WOD": event.WOD,
-        "Score" : event.Score
+        "Date": JSONobject.Date,
+        "Type": JSONobject.Type,
+        "Timecap": JSONobject.Timecap,
+        "WOD": JSONobject.WOD,
+        "Score" : JSONobject.Score
       }      
 };
 

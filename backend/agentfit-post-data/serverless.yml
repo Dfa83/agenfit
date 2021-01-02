@@ -34,4 +34,19 @@ functions:
      - httpApi:
           path: /post-wod
           method: post
-          cors: true
+
+resources:
+  Resources:
+    agenfit:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: agenfit
+        AttributeDefinitions:
+          - AttributeName: WodId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: WodId
+            KeyType: HASH
+        ProvisionedThroughput:
+            ReadCapacityUnits: 4
+            WriteCapacityUnits: 4
