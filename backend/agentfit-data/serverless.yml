@@ -11,7 +11,7 @@
 #
 # Happy Coding!
 
-service: agentfit-post-data
+service: agentfit-data
 
 frameworkVersion: '2'
 
@@ -35,21 +35,21 @@ provider:
 
 functions:
   - wodSubmission:
-      handler: handler.submit
+      handler: postwod.submit
       events:
         - httpApi:
               path: /post-wod
               method: post
 
   - wodRetrieveDate:
-      handler: handler.retrievedate
+      handler: getwoddate.retrievedate
       events:      
          - httpApi:
              method: get
              path: /get-wod-date/{woddate}
 
   - wodRetrieveUuid:
-      handler: handler.retrieveuuid
+      handler: getwoduuid.retrieveuuid
       events:      
          - httpApi:
              method: get
