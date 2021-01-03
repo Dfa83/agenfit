@@ -28,6 +28,7 @@ provider:
       - dynamodb:GetItem
       - dynamodb:Scan
       - dynamodb:Query
+      - dynamodb:DeleteItem
 
       Resource: 
         - "arn:aws:dynamodb:eu-west-3:983988906057:table/agenfit"
@@ -54,6 +55,13 @@ functions:
          - httpApi:
              method: get
              path: /get-wod-uuid/{woduuid}
+
+  - wodDeleteUuid:
+      handler: deletewod.delete
+      events:      
+         - httpApi:
+             method: delete
+             path: /delete-wod-uuid/{woduuid}
 
 resources:
   Resources:
