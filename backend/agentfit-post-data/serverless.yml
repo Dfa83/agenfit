@@ -24,16 +24,29 @@ provider:
     - Effect: "Allow"
       Action:
       - dynamodb:PutItem
-      - dynamodb:UpdateItem
-      Resource: "arn:aws:dynamodb:eu-west-3:983988906057:table/agenfit"
+      - dynamodb:UpWodDateItem
+      - dynamodb:GetItem
+      - dynamodb:Scan
+      - dynamodb:Query
+
+      Resource: 
+        - "arn:aws:dynamodb:eu-west-3:983988906057:table/agenfit"
+        - "arn:aws:dynamodb:eu-west-3:983988906057:table/agenfit/index/WodDate-index"
 
 functions:
-  wodSubmission:
-    handler: handler.submit
-    events:
-     - httpApi:
-          path: /post-wod
-          method: post
+  - wodSubmission:
+      handler: handler.submit
+      events:
+        - httpApi:
+              path: /post-wod
+              method: post
+
+  - wodRetrieve:
+      handler: handler.retrieve
+      events:      
+         - httpApi:
+             method: get
+             path: /get-wod/{woddate}
 
 resources:
   Resources:
@@ -44,9 +57,23 @@ resources:
         AttributeDefinitions:
           - AttributeName: WodId
             AttributeType: S
+          - AttributeName: WodDate
+            AttributeType: S
         KeySchema:
           - AttributeName: WodId
             KeyType: HASH
+          - AttributeName: WodDate
+            KeyType: RANGE
         ProvisionedThroughput:
             ReadCapacityUnits: 4
             WriteCapacityUnits: 4
+        GlobalSecondaryIndexes:
+          - IndexName: WodDate-index
+            KeySchema:
+            - AttributeName: WodDate
+              KeyType: HASH
+            Projection: 
+               ProjectionType: "ALL"
+            ProvisionedThroughput:
+               ReadCapacityUnits: 4
+               WriteCapacityUnits: 4  
