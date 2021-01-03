@@ -41,12 +41,19 @@ functions:
               path: /post-wod
               method: post
 
-  - wodRetrieve:
-      handler: handler.retrieve
+  - wodRetrieveDate:
+      handler: handler.retrievedate
       events:      
          - httpApi:
              method: get
-             path: /get-wod/{woddate}
+             path: /get-wod-date/{woddate}
+
+  - wodRetrieveUuid:
+      handler: handler.retrieveuuid
+      events:      
+         - httpApi:
+             method: get
+             path: /get-wod-uuid/{woduuid}
 
 resources:
   Resources:
@@ -55,12 +62,12 @@ resources:
       Properties:
         TableName: agenfit
         AttributeDefinitions:
-          - AttributeName: WodId
+          - AttributeName: WodUuid
             AttributeType: S
           - AttributeName: WodDate
             AttributeType: S
         KeySchema:
-          - AttributeName: WodId
+          - AttributeName: WodUuid
             KeyType: HASH
           - AttributeName: WodDate
             KeyType: RANGE

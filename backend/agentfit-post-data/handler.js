@@ -8,7 +8,7 @@ const JSONobject = JSON.parse(event.body);
 const params = {
     TableName: "agenfit",
     Item: {
-        "WodId": context.awsRequestId,
+        "WodUuid": context.awsRequestId,
         "WodDate": JSONobject.WodDate,
         "Type": JSONobject.Type,
         "Timecap": JSONobject.Timecap,
@@ -31,7 +31,7 @@ DynamoDB.put(params, function (err, data) {
 });
 };
 
-module.exports.retrieve = (event, context, callback) => {
+module.exports.retrievedate = (event, context, callback) => {
     var params = {
         TableName: 'agenfit',
         IndexName: 'WodDate-index',
@@ -40,8 +40,6 @@ module.exports.retrieve = (event, context, callback) => {
           ':woddate': event.pathParameters.woddate
         }
     };
-
-    console.log("params : " + params);
 
     DynamoDB.query(params, function(err, data) {
       if (err) {
@@ -53,4 +51,25 @@ module.exports.retrieve = (event, context, callback) => {
         callback(null, data);
       }
     });
+};
+
+module.exports.retrieveuuid = (event, context, callback) => {
+  var params = {
+      TableName: 'agenfit',
+      KeyConditionExpression: 'WodUuid = :woduuid',
+      ExpressionAttributeValues: {
+        ':woduuid': event.pathParameters.woduuid
+      }
+  };
+
+  DynamoDB.query(params, function(err, data) {
+    if (err) {
+      console.log(err);
+      callback(err);
+    }
+    else {
+      console.log(data);
+      callback(null, data);
+    }
+  });
 };
