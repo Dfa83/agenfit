@@ -61,7 +61,7 @@ functions:
       events:      
          - httpApi:
              method: delete
-             path: /delete-wod-uuid/{woduuid}
+             path: /delete-wod/{woduuid}/{woddate}
 
 resources:
   Resources:
