@@ -12,7 +12,7 @@ const params = {
             "WodDate": event.pathParameters.woddate,
         }
 };
-
+s
 DynamoDB.delete(params, function (err, data) {
     {
         if (err) {
